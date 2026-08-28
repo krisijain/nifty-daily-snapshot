@@ -1,0 +1,5 @@
+yfinance>=0.2.60
+pandas>=2.0.0
+google-cloud-bigquery>=3.25.0
+flask>=3.0.0
+gunicorn>=22.0.0
