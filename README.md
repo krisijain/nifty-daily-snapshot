@@ -26,7 +26,7 @@ enabled.
  
 ```bash
 gcloud auth login
-gcloud config set project YOUR_PROJECT_ID
+gcloud config set project nifty-daily-snapshot
 gcloud auth application-default login
 ```
  
@@ -35,7 +35,7 @@ gcloud auth application-default login
 ```bash
 terraform init
  
-terraform apply -var="project_id=YOUR_PROJECT_ID" \
+terraform apply -var="project_id=nifty-daily-snapshot" \
   -target="google_bigquery_table.daily_prices" \
   -target="google_artifact_registry_repository.images" \
   -target="google_service_account.pipeline"
@@ -47,14 +47,14 @@ terraform apply -var="project_id=YOUR_PROJECT_ID" \
 gcloud services enable cloudbuild.googleapis.com
  
 gcloud builds submit \
-  --tag asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/nifty-snapshot/nifty-snapshot:latest
+  --tag asia-south1-docker.pkg.dev/nifty-daily-snapshot/nifty-snapshot/nifty-snapshot:latest
 ```
 
  
 ### 3. Deploy Cloud Run
  
 ```bash
-terraform apply -var="project_id=YOUR_PROJECT_ID"
+terraform apply -var="project_id=nifty-daily-snapshot"
 ```
  
 ### 4. Trigger the pipeline
@@ -67,13 +67,13 @@ curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
 ### 5. End
  
 ```bash
-terraform destroy -var="project_id=YOUR_PROJECT_ID"
+terraform destroy -var="project_id=nifty-daily-snapshot"
 ```
  
 
 ## What I would do better with more time:
 - The table currently holds one snapshot, not history, so I'd extend it to append incrementally.
-
+- Add a scheduler
 ---
 
 ### END
